@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hamed Translator — English · العربية · 中文 · Français</title>
+<meta name="description" content="Hamed Translator — a simple daily voice translator between English, Arabic, Chinese and French. Made by Mhmd Rmaity." />
+<meta name="author" content="Mhmd Rmaity" />
+<meta name="theme-color" content="#0f2a5c" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230f2a5c'/><text x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='36' fill='%23ffffff'>H</text></svg>" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">H</span>
+    <div class="brand-text">
+      <h1>Hamed Translator</h1>
+      <p>English · العربية · 中文 · Français</p>
+    </div>
+  </div>
+  <button id="themeBtn" class="icon-btn" type="button" title="Light or dark mode" aria-label="Switch between light and dark mode">🌙</button>
+</header>
+
+<main class="wrap">
+
+  <!-- ======================= STEP 1 — LANGUAGES ======================= -->
+  <section class="card" aria-labelledby="stepLang">
+    <div class="step">
+      <span class="step-no">1</span>
+      <h2 id="stepLang" class="step-title">Choose the languages</h2>
+    </div>
+
+    <div class="lang-grid">
+      <div class="lang-side">
+        <span class="field-label">Translate from</span>
+        <div id="sourceChips" class="chips" role="radiogroup" aria-label="Source language"></div>
+      </div>
+
+      <button id="swapBtn" class="swap-btn" type="button" title="Swap the two languages" aria-label="Swap the two languages">
+        <span aria-hidden="true">⇄</span>
+      </button>
+
+      <div class="lang-side">
+        <span class="field-label">Translate into</span>
+        <div id="targetChips" class="chips" role="radiogroup" aria-label="Target language"></div>
+      </div>
+    </div>
+
+    <div class="accent-grid">
+      <label class="field">
+        <span class="field-label">🎙️ My accent (microphone)</span>
+        <select id="sourceAccent" aria-label="Accent used by the microphone"></select>
+      </label>
+      <label class="field">
+        <span class="field-label">🔈 Answer accent (voice)</span>
+        <select id="targetAccent" aria-label="Accent used to read the translation"></select>
+      </label>
+    </div>
+  </section>
+
+  <!-- ======================= STEP 2 — SPEAK OR TYPE ======================= -->
+  <section class="card" aria-labelledby="stepSay">
+    <div class="step">
+      <span class="step-no">2</span>
+      <h2 id="stepSay" class="step-title">Speak or type</h2>
+      <div class="card-tools">
+        <button id="listenSourceBtn" class="icon-btn" type="button" title="Read this text out loud" aria-label="Read the text out loud">🔈</button>
+        <button id="clearBtn" class="icon-btn" type="button" title="Clear the text" aria-label="Clear the text">✕</button>
+      </div>
+    </div>
+
+    <p id="sourceTitle" class="lang-now">English</p>
+
+    <textarea id="sourceText" rows="4" placeholder="Press the microphone and speak, or type here…" autocomplete="off" spellcheck="false"></textarea>
+
+    <p id="micStatus" class="hint" role="status" aria-live="polite"></p>
+
+    <div class="actions">
+      <button id="micBtn" class="btn btn-mic" type="button" aria-label="Record my voice">
+        <span class="mic-dot" aria-hidden="true"></span>
+        <span class="mic-text">Speak</span>
+      </button>
+      <button id="translateBtn" class="btn btn-primary" type="button">Translate</button>
+    </div>
+  </section>
+
+  <!-- ======================= STEP 3 — RESULT ======================= -->
+  <section class="card card-result" aria-labelledby="stepOut">
+    <div class="step">
+      <span class="step-no">3</span>
+      <h2 id="stepOut" class="step-title">Translation</h2>
+      <div class="card-tools">
+        <button id="listenTargetBtn" class="icon-btn icon-btn-solid" type="button" title="Listen to the translation" aria-label="Listen to the translation">🔈</button>
+        <button id="copyBtn" class="icon-btn" type="button" title="Copy the translation" aria-label="Copy the translation">⧉</button>
+        <button id="saveBtn" class="icon-btn" type="button" title="Keep this translation" aria-label="Save the translation">☆</button>
+      </div>
+    </div>
+
+    <p id="targetTitle" class="lang-now">Français</p>
+    <div id="targetText" class="output" aria-live="polite">Your translation will appear here.</div>
+    <p id="meta" class="hint"></p>
+  </section>
+
+  <!-- ======================= LIBRARY ======================= -->
+  <section class="card">
+    <div class="tabs" role="tablist">
+      <button class="tab is-active" role="tab" data-tab="phrases" aria-selected="true">Phrasebook</button>
+      <button class="tab" role="tab" data-tab="history" aria-selected="false">Recent</button>
+      <button class="tab" role="tab" data-tab="saved" aria-selected="false">Saved</button>
+    </div>
+
+    <div id="tab-phrases" class="tab-body" role="tabpanel">
+      <div id="phraseCats" class="chips chips-plain"></div>
+      <div id="phraseList" class="phrase-list"></div>
+    </div>
+
+    <div id="tab-history" class="tab-body" role="tabpanel" hidden>
+      <div id="historyList" class="entry-list"></div>
+      <button id="clearHistoryBtn" class="text-btn" type="button">Clear the list</button>
+    </div>
+
+    <div id="tab-saved" class="tab-body" role="tabpanel" hidden>
+      <div id="savedList" class="entry-list"></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="credit">Hamed Translator — done by <strong>Mhmd Rmaity</strong></p>
+    <p>The microphone works on an <strong>https</strong> address or on <strong>localhost</strong>, in Chrome, Edge or Safari.</p>
+  </footer>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="phrasebook.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
